@@ -4,10 +4,9 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from '../reducers';
+import rootReducer from './reducers';
 
-import Auth from '../components/Auth/Auth';
-import SomeClass from '../components/SomeClass/SomeClass';
+import Auth from './components/Auth/Auth';
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -17,9 +16,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('auth-component-wrapper')
 );
-ReactDOM.render(
-  <Provider store={store}>
-    <SomeClass />
-  </Provider>,
-  document.getElementById('some-wrapper')
-);
+
+// for other components also use ReactDOM.render

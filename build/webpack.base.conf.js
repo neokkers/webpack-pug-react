@@ -1,27 +1,29 @@
-const path = require('path')
-const fs = require('fs')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const fs = require('fs');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const DEV_MODE = process.env.NODE_ENV !== 'production';
 
 const PATHS = {
   src: path.join(__dirname, '../src'),
   dist: path.join(__dirname, '../dist'),
-  assets: 'assets/'
-}
+  assets: 'assets/',
+};
 
 // Pages const for HtmlWebpackPlugin
 
 // const PAGES_DIR = PATHS.src
-const PAGES_DIR = `${PATHS.src}/pug/pages/`
-const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'))
+const PAGES_DIR = `${PATHS.src}/pug/pages/`;
+const PAGES = fs
+  .readdirSync(PAGES_DIR)
+  .filter(fileName => fileName.endsWith('.pug'));
 
 module.exports = {
   // BASE config
   externals: {
-    paths: PATHS
+    paths: PATHS,
   },
   entry: {
     app: PATHS.src,
@@ -30,7 +32,7 @@ module.exports = {
   output: {
     filename: `${PATHS.assets}js/[name].[hash].js`,
     path: PATHS.dist,
-    publicPath: '/'
+    publicPath: '/',
   },
   optimization: {
     splitChunks: {
@@ -39,59 +41,72 @@ module.exports = {
           name: 'vendors',
           test: /node_modules/,
           chunks: 'all',
-          enforce: true
-        }
-      }
-    }
+          enforce: true,
+        },
+      },
+    },
   },
   module: {
-    rules: [{
-      test: /\.pug$/,
-      loader: 'pug-loader'
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: '/node_modules/'
-    }, {
-      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]'
-      }
-    }, {
-      test: /\.(png|jpg|gif|svg)$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]'
-      }
-    }, {
-      test: /\.(sa|sc)ss$/,
-      use: [
-        DEV_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: { sourceMap: true }
-        }, {
-          loader: 'postcss-loader',
-          options: { sourceMap: true }
-        }, {
-          loader: 'sass-loader',
-          options: { sourceMap: true }
-        }
-      ]
-    }, {
-      test: /\.css$/,
-      use: [
-        DEV_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: { sourceMap: true }
-        }, {
-          loader: 'postcss-loader',
-          options: { sourceMap: true, config: { path: `./postcss.config.js` } }
-        }
-      ]
-    }]
+    rules: [
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules/',
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
+      },
+      {
+        test: /\.(sa|sc)ss$/,
+        use: [
+          DEV_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true },
+          },
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: true },
+          },
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          DEV_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              config: { path: `./postcss.config.js` },
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -105,9 +120,12 @@ module.exports = {
 
     // Automatic creation any html pages (Don't forget to RERUN dev server)
 
-    ...PAGES.map(page => new HtmlWebpackPlugin({
-      template: `${PAGES_DIR}/${page}`,
-      filename: `./${page.replace(/\.pug/,'.html')}`
-    }))
+    ...PAGES.map(
+      page =>
+        new HtmlWebpackPlugin({
+          template: `${PAGES_DIR}/${page}`,
+          filename: `./${page.replace(/\.pug/, '.html')}`,
+        })
+    ),
   ],
-}
+};

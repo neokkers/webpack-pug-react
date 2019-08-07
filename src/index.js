@@ -1,6 +1,6 @@
 // JS
 import '@babel/polyfill'; // async await and other
-import './js';
+import './js/app';
 
 // SCSS
 import './assets/styles/main.scss';
