@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-const Example2 = (props) => {
-  return (
-    <div>
-      <button onClick={() => props.setCount(props.count + 1)}>
-        {props.count}
-      </button>
-    </div>
-  )
-}
+const Example2 = props => (
+  <div>
+    <button onClick={() => props.setCount(props.count + 1)}>
+      {props.count}
+    </button>
+  </div>
+);
 
-export default Example2
+export default Example2;
