@@ -1,7 +1,7 @@
 {
   "name": "webpacktemplate",
   "version": "1.0.0",
-  "description": "My template + pug",
+  "description": "webpacktemplate",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development --hot --config ./build/webpack.dev.conf.js",
